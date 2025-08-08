@@ -4,26 +4,26 @@
         <inSequence>
             <switch source="${payload.hospital}">
                 <case regex="grand oak community hospital">
-                    <log category="INFO">
-                        <message>Routing to: ${payload.hospital}</message>
+                    <log category="INFO" logMessageID="false" logFullPayload="false">
+                        <message>WELCOME, Routing to: ${payload.hospital} </message>
                     </log>
                     <sequence key="GrandOakService"/>
                 </case>
                 <case regex="clemency medical center">
-                    <log category="INFO">
-                        <message>Routing to: ${payload.hospital}</message>
+                    <log category="INFO" logMessageID="false" logFullPayload="false">
+                        <message>WELCOME, Routing to: ${payload.hospital}</message>
                     </log>
                     <sequence key="ClemencyService"/>
                 </case>
                 <case regex="pine valley community hospital">
-                    <log category="INFO">
-                        <message>Routing to: ${payload.hospital}</message>
+                    <log category="INFO" logMessageID="false" logFullPayload="false">
+                        <message>WELCOME, Routing to: ${payload.hospital}</message>
                     </log>
                     <sequence key="PineValleyService"/>
                 </case>
                 <default>
-                    <log category="ERROR">
-                        <message>Invalid hospital: ${payload.hospital}</message>
+                    <log category="ERROR" logMessageID="false" logFullPayload="false">
+                        <message>WELCOME, Invalid hospital: ${payload.hospital}</message>
                     </log>
                     <payloadFactory media-type="json">
                         <format>
