@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="ClemencyService" xmlns="http://ws.apache.org/ns/synapse">
+    <variable name="category" expression="${params.pathParams.category}" type="STRING"/>
+    <log category="INFO">
+        <message>Clemency Medical Center - Processing reservation for category: ${vars.category}</message>
+    </log>
+    <payloadFactory media-type="json">
+        <format>
+            {
+            "appointmentNumber": "ACM${now()}",
+            "doctor": {
+            "name": "anne clement",
+            "hospital": "clemency medical center",
+            "category": "${vars.category}",
+            "availability": "8.00 AM - 10.00 AM",
+            "fee": 12000.0
+            },
+            "patient": {
+            "name": "${payload.patient.name}",
+            "dob": "${payload.patient.dob}",
+            "ssn": "${payload.patient.ssn}",
+            "address": "${payload.patient.address}",
+            "phone": "${payload.patient.phone}",
+            "email": "${payload.patient.email}"
+            },
+            "hospital": "clemency medical center",
+            "confirmed": true,
+            "appointmentDate": "${formatDateTime(now(), 'yyyy-MM-dd')}"
+            }
+        </format>
+    </payloadFactory>
+    <respond/>
+</sequence>

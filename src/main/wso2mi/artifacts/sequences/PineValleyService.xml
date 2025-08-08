@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="PineValleyService" xmlns="http://ws.apache.org/ns/synapse">
+    <variable name="category" expression="${params.pathParams.category}" type="STRING"/>
+    <log category="INFO">
+        <message>Pine Valley Community Hospital - Processing reservation for category: ${vars.category}</message>
+    </log>
+    <payloadFactory media-type="json">
+        <format>
+            {
+            "appointmentNumber": "APV${now()}",
+            "doctor": {
+            "name": "seth mears",
+            "hospital": "pine valley community hospital",
+            "category": "${vars.category}",
+            "availability": "10.00 AM - 12.00 PM",
+            "fee": 8000.0
+            },
+            "patient": {
+            "name": "${payload.patient.name}",
+            "dob": "${payload.patient.dob}",
+            "ssn": "${payload.patient.ssn}",
+            "address": "${payload.patient.address}",
+            "phone": "${payload.patient.phone}",
+            "email": "${payload.patient.email}"
+            },
+            "hospital": "pine valley community hospital",
+            "confirmed": true,
+            "appointmentDate": "${formatDateTime(now(), 'yyyy-MM-dd')}",
+            "discount": 20,
+            "discounted": 6400.0
+            }
+        </format>
+    </payloadFactory>
+    <respond/>
+</sequence>

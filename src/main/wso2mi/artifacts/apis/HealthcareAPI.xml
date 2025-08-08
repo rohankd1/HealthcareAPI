@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/healthcare" name="HealthcareAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/categories/{category}/reserve">
+        <inSequence>
+            <switch source="${payload.hospital}">
+                <case regex="grand oak community hospital">
+                    <log category="INFO">
+                        <message>Routing to: ${payload.hospital}</message>
+                    </log>
+                    <sequence key="GrandOakService"/>
+                </case>
+                <case regex="clemency medical center">
+                    <log category="INFO">
+                        <message>Routing to: ${payload.hospital}</message>
+                    </log>
+                    <sequence key="ClemencyService"/>
+                </case>
+                <case regex="pine valley community hospital">
+                    <log category="INFO">
+                        <message>Routing to: ${payload.hospital}</message>
+                    </log>
+                    <sequence key="PineValleyService"/>
+                </case>
+                <default>
+                    <log category="ERROR">
+                        <message>Invalid hospital: ${payload.hospital}</message>
+                    </log>
+                    <payloadFactory media-type="json">
+                        <format>
+                            {
+                            "error": "Invalid hospital",
+                            "message": "Hospital not found: ${payload.hospital}"
+                            }
+                        </format>
+                    </payloadFactory>
+                    <respond/>
+                </default>
+            </switch>
+        </inSequence>
+        <faultSequence>
+            <sequence key="ErrorSequence"/>
+        </faultSequence>
+    </resource>
+</api>

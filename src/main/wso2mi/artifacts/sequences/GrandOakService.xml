@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="GrandOakService" xmlns="http://ws.apache.org/ns/synapse">
+    <variable name="category" expression="${params.pathParams.category}" type="STRING"/>
+    <log category="INFO">
+        <message>Grand Oak Community Hospital - Processing reservation for category: ${vars.category}</message>
+    </log>
+    <payloadFactory media-type="json">
+        <format>
+            {
+            "appointmentNumber": "AGO${now()}",
+            "doctor": {
+            "name": "thomas collins",
+            "hospital": "grand oak community hospital",
+            "category": "${vars.category}",
+            "availability": "9.00 AM - 11.00 AM",
+            "fee": 7000.0
+            },
+            "patient": {
+            "name": "${payload.patient.name}",
+            "dob": "${payload.patient.dob}",
+            "ssn": "${payload.patient.ssn}",
+            "address": "${payload.patient.address}",
+            "phone": "${payload.patient.phone}",
+            "email": "${payload.patient.email}"
+            },
+            "hospital": "grand oak community hospital",
+            "confirmed": true,
+            "appointmentDate": "${formatDateTime(now(), 'yyyy-MM-dd')}"
+            }
+        </format>
+    </payloadFactory>
+    <respond/>
+</sequence>

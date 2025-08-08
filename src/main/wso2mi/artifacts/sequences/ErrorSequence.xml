@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="ErrorSequence" xmlns="http://ws.apache.org/ns/synapse">
+    <log category="ERROR">
+        <message>Error in backend service: ${props.synapse.ERROR_MESSAGE}</message>
+    </log>
+    <payloadFactory media-type="json">
+        <format>
+            {
+            "error": "Backend service error",
+            "message": "Unable to process the request"
+            }
+        </format>
+    </payloadFactory>
+    <respond/>
+</sequence>
